@@ -132,6 +132,7 @@ $page_title = "Expired Products Report";
                             <tr>
                                 <th>Product Code</th>
                                 <th>Product Name</th>
+                                <th>Batch No</th>
                                 <th>Category</th>
                                 <th>Supplier</th>
                                 <th>Quantity</th>
@@ -144,7 +145,7 @@ $page_title = "Expired Products Report";
                         <tbody>
                             <?php if (empty($report['data'])): ?>
                             <tr>
-                                <td colspan="9" class="text-center py-5 text-success">
+                                <td colspan="10" class="text-center py-5 text-success">
                                     <i data-lucide="check-circle" style="width: 48px; height: 48px; margin-bottom: 12px;"></i>
                                     <h5>No Expired Products!</h5>
                                     <p class="mb-0 text-muted">All products are within their expiry dates</p>
@@ -155,6 +156,7 @@ $page_title = "Expired Products Report";
                             <tr>
                                 <td><?php echo htmlspecialchars($product['product_code']); ?></td>
                                 <td><strong><?php echo htmlspecialchars($product['product_name']); ?></strong></td>
+                                <td><span class="badge bg-secondary"><?php echo htmlspecialchars($product['batch_number']); ?></span></td>
                                 <td><?php echo htmlspecialchars($product['category_name'] ?? 'N/A'); ?></td>
                                 <td><?php echo htmlspecialchars($product['supplier_name'] ?? 'N/A'); ?></td>
                                 <td><?php echo number_format($product['quantity']); ?></td>

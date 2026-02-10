@@ -11,10 +11,12 @@ class ProductManager {
     }
     
     /**
-     * Create a new product
+     * Create a new product and its initial batch
      */
     public function create($data) {
         try {
+            $this->db->beginTransaction();
+
             $query = "INSERT INTO products (
                 product_code, barcode, product_name, category_id, supplier_id,
                 description, unit_of_measure, unit_price, cost_price, quantity,
@@ -43,17 +45,38 @@ class ProductManager {
                 ':storage_location' => $data['storage_location'] ?? null,
                 ':manufacture_date' => $data['manufacture_date'] ?: null,
                 ':expiry_date' => $data['expiry_date'],
-                ':batch_number' => $data['batch_number'] ?? null,
+                ':batch_number' => $data['batch_number'] ?? 'Initial',
                 ':status' => $data['status'] ?? 'active',
                 ':created_by' => $data['created_by'] ?? null
             ]);
             
+            $product_id = $this->db->lastInsertId();
+
+            // Create Initial Batch Tracking Entry
+            $batchQuery = "INSERT INTO product_batches 
+                (product_id, batch_number, manufacture_date, expiry_date, initial_quantity, current_quantity, status)
+                VALUES (:pid, :bno, :mfg, :exp, :iqty, :cqty, :status)";
+            
+            $batchStmt = $this->db->prepare($batchQuery);
+            $batchStmt->execute([
+                ':pid' => $product_id,
+                ':bno' => $data['batch_number'] ?: 'Initial',
+                ':mfg' => $data['manufacture_date'] ?: null,
+                ':exp' => $data['expiry_date'],
+                ':iqty' => $data['quantity'] ?? 0,
+                ':cqty' => $data['quantity'] ?? 0,
+                ':status' => ($data['quantity'] ?? 0) > 0 ? 'active' : 'depleted'
+            ]);
+            
+            $this->db->commit();
+
             return [
                 'success' => true,
-                'product_id' => $this->db->lastInsertId(),
-                'message' => 'Product created successfully'
+                'product_id' => $product_id,
+                'message' => 'Product and initial batch created successfully'
             ];
         } catch (PDOException $e) {
+            if ($this->db->inTransaction()) $this->db->rollBack();
             error_log("ProductManager::create error: " . $e->getMessage());
             return ['success' => false, 'message' => 'Failed to create product: ' . $e->getMessage()];
         }

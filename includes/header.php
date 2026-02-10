@@ -10,7 +10,7 @@
     
     <a href="<?php echo base_url('dashboard.php'); ?>" class="logo">
         <span class="logo-icon">
-            <i data-lucide="package-check" style="width: 18px; height: 18px;"></i>
+            <img src="<?php echo base_url('images/logo.png'); ?>" alt="ShelfAlert Logo" style="width: 18px; height: 18px;">
         </span>
         <span>ShelfAlert</span>
     </a>
@@ -52,16 +52,16 @@
                             WHERE a.status = 'active' 
                             ORDER BY FIELD(a.alert_type, 'expired', 'critical', 'warning'), a.created_at DESC 
                             LIMIT 5");
-                        $alerts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        $nav_alerts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         
-                        if (empty($alerts)):
+                        if (empty($nav_alerts)):
                 ?>
                 <div class="dropdown-item text-center text-muted py-3">
                     <p class="mb-0">No active alerts</p>
                 </div>
                 <?php 
                         else:
-                            foreach ($alerts as $alert):
+                            foreach ($nav_alerts as $alert):
                 ?>
                 <a href="<?php echo base_url('modules/products/view.php?id=' . $alert['product_id']); ?>" class="dropdown-item">
                     <span class="badge badge-<?php echo $alert['alert_type'] === 'expired' ? 'danger' : ($alert['alert_type'] === 'critical' ? 'warning' : 'info'); ?> me-2">

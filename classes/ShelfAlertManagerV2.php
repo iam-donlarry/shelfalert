@@ -1,9 +1,10 @@
 <?php
 /**
- * AlertManager Class
+ * ShelfAlertManagerV2 Class
  * Handles expiry alert generation, management, and notifications
+ * VERSION 2 to bypass cache issues
  */
-class AlertManager {
+class ShelfAlertManagerV2 {
     private $db;
     private $critical_days = 7;
     private $warning_days = 30;
@@ -41,45 +42,77 @@ class AlertManager {
     public function generateExpiryAlerts() {
         try {
             $created = 0;
+            $updated = 0;
             
-            // Get products that need alerts
-            $query = "SELECT p.product_id, p.product_name, p.product_code, p.expiry_date,
-                        DATEDIFF(p.expiry_date, CURDATE()) as days_until_expiry
-                      FROM products p
-                      WHERE p.status = 'active'
-                        AND DATEDIFF(p.expiry_date, CURDATE()) <= :warning_days";
+            // 1. Get batches that need alerts
+            $query = "SELECT pb.batch_id, pb.product_id, pb.batch_number, pb.expiry_date,
+                        p.product_name, p.product_code,
+                        DATEDIFF(pb.expiry_date, CURDATE()) as days_until_expiry
+                      FROM product_batches pb
+                      JOIN products p ON pb.product_id = p.product_id
+                      WHERE pb.status = 'active'
+                        AND DATEDIFF(pb.expiry_date, CURDATE()) <= :warning_days";
             
             $stmt = $this->db->prepare($query);
             $stmt->execute([':warning_days' => $this->warning_days]);
-            $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $batches = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            foreach ($products as $product) {
-                $days = (int)$product['days_until_expiry'];
+            foreach ($batches as $batch) {
+                $days = (int)$batch['days_until_expiry'];
                 
                 // Determine alert type
                 if ($days <= 0) {
                     $alert_type = 'expired';
-                    $message = "Product '{$product['product_name']}' ({$product['product_code']}) has EXPIRED on " . date('M d, Y', strtotime($product['expiry_date']));
+                    $message = "Batch {$batch['batch_number']} of '{$batch['product_name']}' ({$batch['product_code']}) has EXPIRED on " . date('M d, Y', strtotime($batch['expiry_date']));
                 } elseif ($days <= $this->critical_days) {
                     $alert_type = 'critical';
-                    $message = "Product '{$product['product_name']}' ({$product['product_code']}) expires in {$days} day(s) on " . date('M d, Y', strtotime($product['expiry_date']));
+                    $message = "Batch {$batch['batch_number']} of '{$batch['product_name']}' ({$batch['product_code']}) expires in {$days} day(s) on " . date('M d, Y', strtotime($batch['expiry_date']));
                 } else {
                     $alert_type = 'warning';
-                    $message = "Product '{$product['product_name']}' ({$product['product_code']}) expires in {$days} days on " . date('M d, Y', strtotime($product['expiry_date']));
+                    $message = "Batch {$batch['batch_number']} of '{$batch['product_name']}' ({$batch['product_code']}) expires in {$days} days on " . date('M d, Y', strtotime($batch['expiry_date']));
                 }
                 
-                // Check if active alert already exists for this product and type
-                $check = $this->db->prepare("SELECT alert_id FROM alerts 
-                    WHERE product_id = :product_id AND alert_type = :alert_type AND status IN ('active', 'acknowledged')");
-                $check->execute([':product_id' => $product['product_id'], ':alert_type' => $alert_type]);
+                // Check if alert exists for THIS SPECIFIC BATCH
+                $check = $this->db->prepare("SELECT alert_id, alert_type, status FROM alerts 
+                    WHERE batch_id = :batch_id AND status IN ('active', 'acknowledged')");
+                $check->execute([':batch_id' => $batch['batch_id']]);
+                $existing = $check->fetch(PDO::FETCH_ASSOC);
                 
-                if (!$check->fetch()) {
-                    // Create new alert
+                if ($existing) {
+                    // Update if type changed or message needs refresh
+                    if ($existing['alert_type'] !== $alert_type) {
+                        $update = $this->db->prepare("UPDATE alerts SET 
+                            alert_type = :type, 
+                            alert_message = :msg, 
+                            days_until_expiry = :days,
+                            created_at = NOW() 
+                            WHERE alert_id = :id");
+                        $update->execute([
+                            ':type' => $alert_type,
+                            ':msg' => $message,
+                            ':days' => $days,
+                            ':id' => $existing['alert_id']
+                        ]);
+                        $updated++;
+                    } else {
+                        $update = $this->db->prepare("UPDATE alerts SET 
+                            alert_message = :msg, 
+                            days_until_expiry = :days
+                            WHERE alert_id = :id");
+                        $update->execute([
+                            ':msg' => $message,
+                            ':days' => $days,
+                            ':id' => $existing['alert_id']
+                        ]);
+                    }
+                } else {
+                    // Create new alert for this batch
                     $insert = $this->db->prepare("INSERT INTO alerts 
-                        (product_id, alert_type, alert_message, days_until_expiry, status)
-                        VALUES (:product_id, :alert_type, :message, :days, 'active')");
+                        (product_id, batch_id, alert_type, alert_message, days_until_expiry, status)
+                        VALUES (:product_id, :batch_id, :alert_type, :message, :days, 'active')");
                     $insert->execute([
-                        ':product_id' => $product['product_id'],
+                        ':product_id' => $batch['product_id'],
+                        ':batch_id' => $batch['batch_id'],
                         ':alert_type' => $alert_type,
                         ':message' => $message,
                         ':days' => $days
@@ -88,7 +121,7 @@ class AlertManager {
                 }
             }
             
-            return ['success' => true, 'alerts_created' => $created];
+            return ['success' => true, 'created' => $created, 'updated' => $updated];
         } catch (PDOException $e) {
             error_log("AlertManager::generateExpiryAlerts error: " . $e->getMessage());
             return ['success' => false, 'message' => $e->getMessage()];
@@ -106,7 +139,7 @@ class AlertManager {
                       FROM alerts a
                       JOIN products p ON a.product_id = p.product_id
                       LEFT JOIN categories c ON p.category_id = c.category_id
-                      WHERE a.status = 'active'
+                      WHERE a.status IN ('active', 'acknowledged')
                       ORDER BY 
                         CASE a.alert_type 
                             WHEN 'expired' THEN 1 
@@ -133,46 +166,48 @@ class AlertManager {
      */
     public function getAll($filters = []) {
         try {
-            $where = ["1=1"];
-            $params = [];
-            
-            if (!empty($filters['status'])) {
-                $where[] = "a.status = :status";
-                $params[':status'] = $filters['status'];
-            }
-            
-            if (!empty($filters['alert_type'])) {
-                $where[] = "a.alert_type = :alert_type";
-                $params[':alert_type'] = $filters['alert_type'];
-            }
-            
-            if (!empty($filters['date_from'])) {
-                $where[] = "DATE(a.created_at) >= :date_from";
-                $params[':date_from'] = $filters['date_from'];
-            }
-            
-            if (!empty($filters['date_to'])) {
-                $where[] = "DATE(a.created_at) <= :date_to";
-                $params[':date_to'] = $filters['date_to'];
-            }
-            
-            $whereClause = implode(' AND ', $where);
-            
-            $query = "SELECT a.*, 
-                        p.product_name, p.product_code, p.expiry_date,
+            // Explicitly select columns to avoid ANY wildcard/join collision issues
+            // CRITICAL FIX: a.status as alert_status to avoid product.status collision
+            $query = "SELECT 
+                        a.alert_id, a.product_id, a.batch_id, a.alert_type, 
+                        a.status as alert_status, a.alert_message, 
+                        a.days_until_expiry, a.created_at,
+                        a.acknowledged_by, a.acknowledged_at, a.resolved_at,
+                        p.product_name, p.product_code,
+                        pb.batch_number, pb.expiry_date as batch_expiry,
                         c.category_name,
                         u.full_name as acknowledged_by_name
                       FROM alerts a
                       JOIN products p ON a.product_id = p.product_id
+                      LEFT JOIN product_batches pb ON a.batch_id = pb.batch_id
                       LEFT JOIN categories c ON p.category_id = c.category_id
                       LEFT JOIN users u ON a.acknowledged_by = u.user_id
-                      WHERE {$whereClause}
-                      ORDER BY a.created_at DESC";
+                      WHERE 1=1";
+            
+            $params = [];
+            
+            if (!empty($filters['status'])) {
+                $query .= " AND a.status = :status";
+                $params[':status'] = $filters['status'];
+            }
+            
+            if (!empty($filters['alert_type'])) {
+                $query .= " AND a.alert_type = :alert_type";
+                $params[':alert_type'] = $filters['alert_type'];
+            }
+            
+            $query .= " ORDER BY a.created_at DESC";
             
             $stmt = $this->db->prepare($query);
-            $stmt->execute($params);
             
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($params as $key => $value) {
+                $stmt->bindValue($key, $value);
+            }
+            
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            return $results;
         } catch (PDOException $e) {
             error_log("AlertManager::getAll error: " . $e->getMessage());
             return [];

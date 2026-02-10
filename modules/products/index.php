@@ -238,6 +238,11 @@ $page_title = "Products";
                                     };
                                     ?>
                                     <span class="expiry-badge <?php echo $expiryStatus; ?>"><?php echo $expiryText; ?></span>
+                                    <?php if (!empty($product['batch_number'])): ?>
+                                        <div class="mt-1 small text-muted">
+                                            Batch: <strong><?php echo htmlspecialchars($product['batch_number']); ?></strong>
+                                        </div>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <span class="status-badge <?php echo $product['status']; ?>">

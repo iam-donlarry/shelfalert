@@ -2,7 +2,7 @@
 require_once '../../config/database.php';
 require_once '../../includes/auth.php';
 require_once '../../includes/functions.php';
-require_once '../../classes/AlertManager.php';
+require_once '../../classes/ShelfAlertManagerV2.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -10,30 +10,49 @@ $auth = new Auth($db);
 
 $auth->requireAuth();
 
-$alertManager = new AlertManager($db);
+// Use V2 Manager
+$alertManager = new ShelfAlertManagerV2($db);
+
+// Prevent caching
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+header("Pragma: no-cache"); // HTTP 1.0.
+header("Expires: 0"); // Proxies.
 
 // Generate new alerts
 $alertManager->generateExpiryAlerts();
 
 // Get filter parameters
 $filters = [
-    'status' => $_GET['status'] ?? 'active',
-    'alert_type' => $_GET['type'] ?? '',
-    'date_from' => $_GET['date_from'] ?? '',
-    'date_to' => $_GET['date_to'] ?? ''
+    'status' => isset($_GET['status']) ? trim($_GET['status']) : 'active',
+    'alert_type' => isset($_GET['type']) ? trim($_GET['type']) : ''
 ];
+
+// DEBUG: Check what the server received
+// die("<pre>FILTERS RECEIVED:\n" . print_r($filters, true) . "</pre>");
+
+// Debug output removed
 
 $alerts = $alertManager->getAll($filters);
 $stats = $alertManager->getStats();
 
-// Handle acknowledge action
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    if ($_POST['action'] === 'acknowledge' && isset($_POST['alert_id'])) {
-        $result = $alertManager->acknowledge($_POST['alert_id'], $_SESSION['user_id']);
-        if ($result['success']) {
-            header('Location: index.php?success=Alert acknowledged');
-            exit;
-        }
+// Handle alert actions (acknowledge/resolve)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['alert_id'])) {
+    $alert_id = $_POST['alert_id'];
+    $action = $_POST['action'];
+    $result = ['success' => false, 'message' => 'Invalid action'];
+
+    if ($action === 'acknowledge') {
+        $result = $alertManager->acknowledge($alert_id, $_SESSION['user_id']);
+    } elseif ($action === 'resolve') {
+         $result = $alertManager->resolve($alert_id);
+    }
+
+    if ($result['success']) {
+        // Redirect to same page with preserved filters
+        $query_params = $_GET;
+        $query_params['success'] = $result['message'];
+        header('Location: index.php?' . http_build_query($query_params));
+        exit;
     }
 }
 
@@ -189,9 +208,9 @@ $page_title = "Expiry Alerts";
         <?php include '../../includes/sidebar.php'; ?>
 
         <main class="main-content">
-            <div class="page-header">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1 class="page-title">Expiry Alerts</h1>
+                    <h4 class="page-title">Expiry Alerts</h4>
                     <p class="page-subtitle">Monitor and manage product expiry notifications</p>
                 </div>
             </div>
@@ -237,8 +256,9 @@ $page_title = "Expiry Alerts";
             </div>
 
             <!-- Filters -->
+            
             <div class="filter-card">
-                <form method="GET" class="row g-3">
+                <form action="index.php" method="GET" class="row g-3">
                     <div class="col-md-3">
                         <label class="form-label">Status</label>
                         <select name="status" class="form-select">
@@ -257,25 +277,30 @@ $page_title = "Expiry Alerts";
                             <option value="warning" <?php echo $filters['alert_type'] === 'warning' ? 'selected' : ''; ?>>Warning</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <label class="form-label">From Date</label>
-                        <input type="date" name="date_from" class="form-control" value="<?php echo $filters['date_from']; ?>">
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label">To Date</label>
-                        <input type="date" name="date_to" class="form-control" value="<?php echo $filters['date_to']; ?>">
-                    </div>
-                    <div class="col-md-2 d-flex align-items-end">
+                    <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">
                             <i data-lucide="search" style="width: 16px; height: 16px; margin-right: 6px;"></i>
                             Filter
                         </button>
                     </div>
                 </form>
+                <div class="text-end text-muted small mt-2">
+                    Server Time: <?php echo date('H:i:s'); ?> | Status Filter: <?php echo htmlspecialchars($filters['status']); ?>
+                </div>
             </div>
 
             <!-- Alerts List -->
             <div class="alert-card">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <?php 
+                        $statusText = $filters['status'] === '' ? 'All Statuses' : ucfirst($filters['status']);
+                        $typeText = $filters['alert_type'] === '' ? 'All Types' : ucfirst($filters['alert_type']);
+                        echo "Showing: <strong>$statusText</strong> &bull; <strong>$typeText</strong>";
+                        ?>
+                    </h6>
+                    <span class="badge bg-secondary"><?php echo count($alerts); ?> results</span>
+                </div>
                 <?php if (empty($alerts)): ?>
                 <div class="p-5 text-center text-muted">
                     <i data-lucide="check-circle" style="width: 48px; height: 48px; color: #10b981; margin-bottom: 12px;"></i>
@@ -283,7 +308,10 @@ $page_title = "Expiry Alerts";
                     <p class="mb-0">No alerts match your filter criteria.</p>
                 </div>
                 <?php else: ?>
-                <?php foreach ($alerts as $alert): ?>
+                <?php foreach ($alerts as $alert): 
+                    // Use aliased status if available to avoid collision
+                    $status = $alert['alert_status'] ?? $alert['status'];
+                ?>
                 <div class="alert-item">
                     <div class="alert-type-icon <?php echo $alert['alert_type']; ?>">
                         <i data-lucide="<?php echo $alert['alert_type'] === 'expired' ? 'x-circle' : 'alert-triangle'; ?>" style="width: 22px; height: 22px;"></i>
@@ -301,16 +329,27 @@ $page_title = "Expiry Alerts";
                         </div>
                     </div>
                     <div class="alert-actions">
-                        <?php if ($alert['status'] === 'active'): ?>
-                        <form method="POST" style="display: inline;">
+                        <?php if ($status === 'active'): ?>
+                        <?php if ($alert['alert_type'] === 'expired'): ?>
+                        <a href="../products/view.php?id=<?php echo $alert['product_id']; ?>&action=resolve_expiry&batch=<?php echo urlencode($alert['batch_number'] ?? ''); ?>" class="btn btn-sm btn-outline-danger" title="Resolve / Remove Stock">
+                            <i data-lucide="trash-2" style="width: 16px; height: 16px; margin-right: 4px;"></i> Resolve
+                        </a>
+                        <?php else: ?>
+                        <form action="index.php" method="POST" style="display: inline;">
                             <input type="hidden" name="action" value="acknowledge">
                             <input type="hidden" name="alert_id" value="<?php echo $alert['alert_id']; ?>">
                             <button type="submit" class="btn btn-sm btn-outline-success" title="Acknowledge">
-                                <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+                                <i data-lucide="check" style="width: 16px; height: 16px;"></i> Acknowledge
                             </button>
                         </form>
+                        <?php endif; ?>
+                        <?php elseif ($status === 'acknowledged'): ?>
+                        <a href="../products/view.php?id=<?php echo $alert['product_id']; ?>&action=resolve_expiry&batch=<?php echo urlencode($alert['batch_number'] ?? ''); ?>" class="btn btn-sm btn-outline-danger" title="Resolve / Remove Stock">
+                            <i data-lucide="trash-2" style="width: 16px; height: 16px; margin-right: 4px;"></i> Resolve
+                        </a>
+                        <span class="alert-badge <?php echo $status; ?>"><?php echo ucfirst($status); ?></span>
                         <?php else: ?>
-                        <span class="alert-badge <?php echo $alert['status']; ?>"><?php echo ucfirst($alert['status']); ?></span>
+                        <span class="alert-badge <?php echo $status; ?>"><?php echo ucfirst($status); ?></span>
                         <?php endif; ?>
                         <a href="../products/view.php?id=<?php echo $alert['product_id']; ?>" class="btn btn-sm btn-outline-primary" title="View Product">
                             <i data-lucide="eye" style="width: 16px; height: 16px;"></i>

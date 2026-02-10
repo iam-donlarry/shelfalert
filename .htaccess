@@ -10,7 +10,7 @@ RewriteCond %{REQUEST_FILENAME} !-l
 
 # Add .php extension to URLs without it
 RewriteCond %{REQUEST_FILENAME}.php -f
-RewriteRule ^(.*)$ $1.php [L]
+RewriteRule ^(.*)$ $1.php [L,QSA]
 
 # Handle 404 errors
 ErrorDocument 404 /shelfalert/404.php

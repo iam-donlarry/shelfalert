@@ -2,7 +2,7 @@
 require_once '../config/database.php';
 require_once '../includes/auth.php';
 require_once '../includes/functions.php';
-require_once '../classes/AlertManager.php';
+require_once '../classes/ShelfAlertManagerV2.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -16,7 +16,7 @@ if (($_SESSION['role_name'] ?? '') !== 'Admin') {
     exit;
 }
 
-$alertManager = new AlertManager($db);
+$alertManager = new ShelfAlertManagerV2($db);
 
 $message = '';
 $error = '';

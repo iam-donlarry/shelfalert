@@ -133,6 +133,22 @@ CREATE TABLE IF NOT EXISTS products (
     INDEX idx_status (status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Product Batches Table (Tracks expiry and stock by batch)
+CREATE TABLE IF NOT EXISTS product_batches (
+    batch_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    batch_number VARCHAR(50) NOT NULL,
+    expiry_date DATE NOT NULL,
+    initial_quantity INT DEFAULT 0,
+    current_quantity INT DEFAULT 0,
+    status ENUM('active', 'depleted', 'expired') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    INDEX idx_expiry (expiry_date),
+    INDEX idx_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- =====================================================
 -- ALERT MANAGEMENT TABLES
 -- =====================================================

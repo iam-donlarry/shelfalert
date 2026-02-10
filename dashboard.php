@@ -3,7 +3,7 @@ require_once 'config/database.php';
 require_once 'includes/auth.php';
 require_once 'includes/functions.php';
 require_once 'classes/ProductManager.php';
-require_once 'classes/AlertManager.php';
+require_once 'classes/ShelfAlertManagerV2.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -18,7 +18,7 @@ if (!empty($_SESSION['must_change_password'])) {
 }
 
 $productManager = new ProductManager($db);
-$alertManager = new AlertManager($db);
+$alertManager = new ShelfAlertManagerV2($db);
 
 // Get dashboard statistics
 $stats = $productManager->getStats();
@@ -540,13 +540,21 @@ $page_title = "Dashboard";
 
             // Expiry Status Chart
             const expiryCtx = document.getElementById('expiryStatusChart').getContext('2d');
+            const expiryData = <?php echo json_encode($expiryStatusData); ?>;
+            const statusColors = {
+                'Expired': '#dc2626',
+                'Critical (1-7 days)': '#ea580c',
+                'Warning (8-30 days)': '#f59e0b',
+                'Good (>30 days)': '#10b981'
+            };
+
             new Chart(expiryCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: <?php echo json_encode(array_column($expiryStatusData, 'status')); ?>,
+                    labels: expiryData.map(item => item.status),
                     datasets: [{
-                        data: <?php echo json_encode(array_column($expiryStatusData, 'count')); ?>,
-                        backgroundColor: ['#dc2626', '#ea580c', '#f59e0b', '#10b981'],
+                        data: expiryData.map(item => item.count),
+                        backgroundColor: expiryData.map(item => statusColors[item.status] || '#cbd5e1'),
                         borderWidth: 0
                     }]
                 },

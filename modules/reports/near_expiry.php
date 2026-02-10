@@ -16,12 +16,6 @@ $reportGenerator = new ReportGenerator($db);
 $days = $_GET['days'] ?? 30;
 $report = $reportGenerator->getNearExpiryReport($days);
 
-// Handle CSV export
-if (isset($_GET['export']) && $_GET['export'] === 'csv') {
-    $reportGenerator->exportToCsv($report['data'], 'near_expiry_report_' . date('Y-m-d') . '.csv');
-    exit;
-}
-
 $page_title = "Near-Expiry Products Report";
 ?>
 
@@ -99,16 +93,6 @@ $page_title = "Near-Expiry Products Report";
                 <div>
                     <h1 class="page-title">Near-Expiry Products</h1>
                     <p class="page-subtitle">Products expiring within the next <?php echo $days; ?> days</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <button onclick="window.print()" class="btn btn-outline-secondary">
-                        <i data-lucide="printer" style="width: 18px; height: 18px; margin-right: 6px;"></i>
-                        Print
-                    </button>
-                    <a href="?days=<?php echo $days; ?>&export=csv" class="btn btn-success">
-                        <i data-lucide="download" style="width: 18px; height: 18px; margin-right: 6px;"></i>
-                        Export CSV
-                    </a>
                 </div>
             </div>
 

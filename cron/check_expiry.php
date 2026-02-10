@@ -60,7 +60,7 @@ echo "==============================================\n\n";
 
 // Load required files
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../classes/AlertManager.php';
+require_once __DIR__ . '/../classes/ShelfAlertManagerV2.php';
 
 try {
     // Connect to database
@@ -70,7 +70,7 @@ try {
     echo "[OK] Database connection established\n\n";
     
     // Initialize Alert Manager
-    $alertManager = new AlertManager($db);
+    $alertManager = new ShelfAlertManagerV2($db);
     
     echo "[STEP 1] Generating expiry alerts...\n";
     

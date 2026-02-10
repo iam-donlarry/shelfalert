@@ -21,7 +21,7 @@ if (($_SESSION['role_name'] ?? '') !== 'Admin') {
 }
 
 $user_id = $_SESSION['user_id'];
-$user = $auth->getUserInfo($user_id);
+$profile_user = $auth->getUserInfo($user_id);
 $activities = $auth->getRecentActivity($user_id);
 $system_stats = $auth->getSystemStats();
 
@@ -41,44 +41,16 @@ if (isset($_POST['update_profile'])) {
         $result = $auth->updateProfile($user_id, $data);
         if ($result['success']) {
             $success_msg = $result['message'];
-            $user = $auth->getUserInfo($user_id); // Refresh data
+            $profile_user = $auth->getUserInfo($user_id); // Refresh data
         } else {
             $error_msg = $result['message'];
         }
     }
 }
+// ... (Password section uses $user_id, so it's fine) ...
 
-// Handle Password Change
-if (isset($_POST['change_password'])) {
-    $current_pass = $_POST['current_password'];
-    $new_pass = $_POST['new_password'];
-    $confirm_pass = $_POST['confirm_password'];
-    
-    if (empty($current_pass) || empty($new_pass) || empty($confirm_pass)) {
-        $error_msg = "All password fields are required";
-    } elseif ($new_pass !== $confirm_pass) {
-        $error_msg = "New passwords do not match";
-    } elseif (strlen($new_pass) < 8) {
-        $error_msg = "New password must be at least 8 characters long";
-    } elseif (!preg_match('/[A-Z]/', $new_pass)) {
-        $error_msg = "Password must contain at least one uppercase letter";
-    } elseif (!preg_match('/[a-z]/', $new_pass)) {
-        $error_msg = "Password must contain at least one lowercase letter";
-    } elseif (!preg_match('/[0-9]/', $new_pass)) {
-        $error_msg = "Password must contain at least one number";
-    } elseif (!preg_match('/[^A-Za-z0-9]/', $new_pass)) {
-        $error_msg = "Password must contain at least one special character";
-    } else {
-        $result = $auth->updatePassword($user_id, $current_pass, $new_pass);
-        if ($result['success']) {
-            $success_msg = $result['message'];
-        } else {
-            $error_msg = $result['message'];
-        }
-    }
-}
-
-$page_title = "My Profile";
+// HTML section
+$page_title = "Profile";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -212,13 +184,13 @@ $page_title = "My Profile";
             <!-- Header Section -->
             <div class="profile-header">
                 <div class="profile-avatar-large">
-                    <?php echo strtoupper(substr($user['full_name'] ?? 'U', 0, 1)); ?>
+                    <?php echo strtoupper(substr($profile_user['full_name'] ?? 'U', 0, 1)); ?>
                 </div>
                 <div>
-                    <h2 class="mb-1"><?php echo htmlspecialchars($user['full_name'] ?? 'Admin'); ?></h2>
+                    <h2 class="mb-1"><?php echo htmlspecialchars($profile_user['full_name'] ?? 'Admin'); ?></h2>
                     <p class="mb-0 text-secondary">
                         <i data-lucide="shield" style="width: 14px; height: 14px; margin-right: 4px;"></i>
-                        <?php echo htmlspecialchars($_SESSION['role_name'] ?? 'Administrator'); ?> &bull; @<?php echo htmlspecialchars($user['username'] ?? 'admin'); ?>
+                        <?php echo htmlspecialchars($_SESSION['role_name'] ?? 'Administrator'); ?> &bull; @<?php echo htmlspecialchars($profile_user['username'] ?? 'admin'); ?>
                     </p>
                 </div>
             </div>
@@ -271,15 +243,15 @@ $page_title = "My Profile";
                                 <form method="POST" action="">
                                     <div class="mb-3">
                                         <label class="form-label">Full Name</label>
-                                        <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
+                                        <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($profile_user['full_name']); ?>" required>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Email Address</label>
-                                        <input type="email" class="form-control readonly-field" value="<?php echo htmlspecialchars($user['email']); ?>" readonly>
+                                        <input type="email" class="form-control readonly-field" value="<?php echo htmlspecialchars($profile_user['email']); ?>" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Phone Number</label>
-                                        <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone']); ?>">
+                                        <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($profile_user['phone'] ?? ''); ?>">
                                     </div>
                                     <div class="mt-4">
                                         <button type="submit" name="update_profile" class="btn btn-primary">Update Profile</button>
@@ -290,7 +262,7 @@ $page_title = "My Profile";
                                 <div class="info-label">Account Info</div>
                                 <p class="small text-muted mb-4">You are logged in with **<?php echo htmlspecialchars($_SESSION['role_name'] ?? 'Admin'); ?>** privileges. Contact the system owner if you need to change your unique username or email address.</p>
                                 <div class="info-label">Last Login</div>
-                                <div class="info-value"><?php echo $user['last_login'] ? date('M j, Y, H:i', strtotime($user['last_login'])) : 'Never'; ?></div>
+                                <div class="info-value"><?php echo $profile_user['last_login'] ? date('M j, Y, H:i', strtotime($profile_user['last_login'])) : 'Never'; ?></div>
                             </div>
                         </div>
                     </div>
@@ -395,7 +367,7 @@ $page_title = "My Profile";
     </div>
 
     <!-- Scripts -->
-    <script src="<?php echo base_url('js/jquery.min.js'); ?>"></script>
+    <script src="/js/jquery.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/lucide.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/sidebar.js'); ?>"></script>

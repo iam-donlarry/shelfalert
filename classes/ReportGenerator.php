@@ -94,23 +94,24 @@ class ReportGenerator {
                         p.product_name,
                         c.category_name,
                         s.supplier_name,
-                        p.quantity,
+                        b.current_quantity as quantity,
                         p.unit_price,
-                        (p.quantity * p.unit_price) as at_risk_value,
-                        p.expiry_date,
-                        DATEDIFF(p.expiry_date, CURDATE()) as days_until_expiry,
-                        p.batch_number,
+                        (b.current_quantity * p.unit_price) as at_risk_value,
+                        b.expiry_date,
+                        DATEDIFF(b.expiry_date, CURDATE()) as days_until_expiry,
+                        b.batch_number,
                         p.storage_location,
                         CASE 
-                            WHEN DATEDIFF(p.expiry_date, CURDATE()) <= 7 THEN 'Critical'
+                            WHEN DATEDIFF(b.expiry_date, CURDATE()) <= 7 THEN 'Critical'
                             ELSE 'Warning'
                         END as urgency
-                      FROM products p
+                      FROM product_batches b
+                      JOIN products p ON b.product_id = p.product_id
                       LEFT JOIN categories c ON p.category_id = c.category_id
                       LEFT JOIN suppliers s ON p.supplier_id = s.supplier_id
-                      WHERE p.status = 'active'
-                        AND DATEDIFF(p.expiry_date, CURDATE()) BETWEEN 1 AND :days
-                      ORDER BY p.expiry_date ASC";
+                      WHERE b.status = 'active'
+                        AND DATEDIFF(b.expiry_date, CURDATE()) BETWEEN 1 AND :days
+                      ORDER BY b.expiry_date ASC";
             
             $stmt = $this->db->prepare($query);
             $stmt->execute([':days' => $days]);
@@ -144,20 +145,21 @@ class ReportGenerator {
                         p.product_name,
                         c.category_name,
                         s.supplier_name,
-                        p.quantity,
+                        b.current_quantity as quantity,
                         p.unit_price,
                         p.cost_price,
-                        (p.quantity * p.cost_price) as loss_value,
-                        p.expiry_date,
-                        DATEDIFF(CURDATE(), p.expiry_date) as days_expired,
-                        p.batch_number,
+                        (b.current_quantity * p.cost_price) as loss_value,
+                        b.expiry_date,
+                        DATEDIFF(CURDATE(), b.expiry_date) as days_expired,
+                        b.batch_number,
                         p.storage_location
-                      FROM products p
+                      FROM product_batches b
+                      JOIN products p ON b.product_id = p.product_id
                       LEFT JOIN categories c ON p.category_id = c.category_id
                       LEFT JOIN suppliers s ON p.supplier_id = s.supplier_id
-                      WHERE p.status = 'active'
-                        AND p.expiry_date < CURDATE()
-                      ORDER BY p.expiry_date ASC";
+                      WHERE b.status = 'active'
+                        AND b.expiry_date < CURDATE()
+                      ORDER BY b.expiry_date ASC";
             
             $stmt = $this->db->prepare($query);
             $stmt->execute();

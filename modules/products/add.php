@@ -284,10 +284,11 @@ $page_title = "Add Product";
                                     <div id="expiryStatus" class="mt-2"></div>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label">Batch Number</label>
+                                    <label class="form-label">Initial Batch Number</label>
                                     <input type="text" name="batch_number" class="form-control" 
                                            value="<?php echo htmlspecialchars($_POST['batch_number'] ?? ''); ?>"
-                                           placeholder="Enter batch number">
+                                           placeholder="e.g., BN-001 or Initial">
+                                    <small class="text-muted">Tracking individual batches helps monitor multiple expiries.</small>
                                 </div>
                             </div>
                         </div>
