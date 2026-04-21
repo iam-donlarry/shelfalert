@@ -82,9 +82,9 @@ $page_title = "User Management";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - ShelfAlert | Ace Supermarket</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
 </head>
 <body>
     <div class="main-wrapper">
@@ -323,11 +323,11 @@ $page_title = "User Management";
         <input type="hidden" name="user_id" id="deactivate_user_id">
     </form>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/lucide.min.js"></script>
-    <script src="js/sidebar.js"></script>
-    <script src="js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         lucide.createIcons();
         

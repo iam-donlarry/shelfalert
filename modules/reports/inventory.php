@@ -52,9 +52,9 @@ $page_title = "Inventory Report";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Report - ShelfAlert | Ace Supermarket</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .report-card {
             background: var(--card-bg);
@@ -98,10 +98,10 @@ $page_title = "Inventory Report";
             font-weight: 600;
         }
         
-        .expiry-badge.Expired { background: #fee2e2; color: #dc2626; }
-        .expiry-badge.Critical { background: #ffedd5; color: #ea580c; }
-        .expiry-badge.Warning { background: #fef3c7; color: #ca8a04; }
-        .expiry-badge.Good { background: #dcfce7; color: #16a34a; }
+        .expiry-badge.Expired { background: #fee2e2; color: #ef4444; }
+        .expiry-badge.Critical { background: #fff7ed; color: #f97316; }
+        .expiry-badge.Warning { background: #fefce8; color: #eab308; }
+        .expiry-badge.Good { background: #ecfdf5; color: #059669; }
         
         @media print {
             .no-print { display: none !important; }
@@ -239,11 +239,11 @@ $page_title = "Inventory Report";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

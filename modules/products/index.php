@@ -48,9 +48,9 @@ $page_title = "Products";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - ShelfAlert | Ace Supermarket</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .filter-card {
             background: var(--card-bg);
@@ -74,10 +74,10 @@ $page_title = "Products";
             font-weight: 600;
         }
         
-        .expiry-badge.expired { background: #fee2e2; color: #dc2626; }
-        .expiry-badge.critical { background: #ffedd5; color: #ea580c; }
-        .expiry-badge.warning { background: #fef3c7; color: #ca8a04; }
-        .expiry-badge.good { background: #dcfce7; color: #16a34a; }
+        .expiry-badge.expired { background: #fee2e2; color: #ef4444; }
+        .expiry-badge.critical { background: #fff7ed; color: #f97316; }
+        .expiry-badge.warning { background: #fefce8; color: #eab308; }
+        .expiry-badge.good { background: #ecfdf5; color: #059669; }
         
         .status-badge {
             padding: 0.35rem 0.75rem;
@@ -86,10 +86,10 @@ $page_title = "Products";
             font-weight: 600;
         }
         
-        .status-badge.active { background: #dcfce7; color: #16a34a; }
-        .status-badge.expired { background: #fee2e2; color: #dc2626; }
-        .status-badge.discontinued { background: #f3f4f6; color: #6b7280; }
-        .status-badge.out_of_stock { background: #fef3c7; color: #ca8a04; }
+        .status-badge.active { background: #ecfdf5; color: #059669; }
+        .status-badge.expired { background: #fee2e2; color: #ef4444; }
+        .status-badge.discontinued { background: #f8fafc; color: #64748b; }
+        .status-badge.out_of_stock { background: #fefce8; color: #eab308; }
         
         .action-btn {
             padding: 0.35rem 0.5rem;
@@ -104,9 +104,9 @@ $page_title = "Products";
             background: var(--hover-bg);
         }
         
-        .action-btn.edit { color: #3b82f6; }
-        .action-btn.view { color: #10b981; }
-        .action-btn.delete { color: #dc2626; }
+        .action-btn.edit { color: var(--primary-color); }
+        .action-btn.view { color: #059669; }
+        .action-btn.delete { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -276,11 +276,11 @@ $page_title = "Products";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         lucide.createIcons();
         

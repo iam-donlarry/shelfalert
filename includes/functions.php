@@ -8,6 +8,14 @@ function base_url($path = '') {
     // ShelfAlert base URL
     return '/' . ltrim($path, '/');
 }
+
+/**
+ * Get URL for an asset with cache busting
+ */
+function asset_url($path) {
+    $ver = '1.1'; // Increment this to force CSS refresh
+    return base_url($path) . "?v=" . $ver;
+}
 function sanitizeInput($data) {
     if (is_array($data)) {
         return array_map('sanitizeInput', $data);

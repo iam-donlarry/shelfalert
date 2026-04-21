@@ -25,9 +25,9 @@ $page_title = "Near-Expiry Products Report";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Near-Expiry Report - ShelfAlert | Ace Supermarket</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .report-card {
             background: var(--card-bg);
@@ -41,7 +41,7 @@ $page_title = "Near-Expiry Products Report";
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             padding: 1.25rem;
-            background: linear-gradient(135deg, #fef3c7 0%, #ffedd5 100%);
+            background: linear-gradient(135deg, var(--primary-light) 0%, rgba(255,255,255,1) 100%);
             border-bottom: 1px solid var(--border-color);
         }
         
@@ -57,8 +57,8 @@ $page_title = "Near-Expiry Products Report";
             font-weight: 700;
         }
         
-        .summary-value.danger { color: #dc2626; }
-        .summary-value.warning { color: #ea580c; }
+        .summary-value.danger { color: #ef4444; }
+        .summary-value.warning { color: #f97316; }
         
         .summary-label {
             font-size: 0.875rem;
@@ -72,8 +72,8 @@ $page_title = "Near-Expiry Products Report";
             font-weight: 600;
         }
         
-        .urgency-badge.Critical { background: #fee2e2; color: #dc2626; }
-        .urgency-badge.Warning { background: #fef3c7; color: #ca8a04; }
+        .urgency-badge.Critical { background: #fee2e2; color: #ef4444; }
+        .urgency-badge.Warning { background: #fefce8; color: #eab308; }
         
         @media print {
             .no-print { display: none !important; }
@@ -187,11 +187,11 @@ $page_title = "Near-Expiry Products Report";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

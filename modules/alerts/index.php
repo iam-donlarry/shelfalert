@@ -65,9 +65,9 @@ $page_title = "Expiry Alerts";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expiry Alerts - ShelfAlert | Ace Supermarket</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .stats-row {
             display: flex;
@@ -97,10 +97,10 @@ $page_title = "Expiry Alerts";
             justify-content: center;
         }
         
-        .stat-mini-icon.expired { background: #fee2e2; color: #dc2626; }
-        .stat-mini-icon.critical { background: #ffedd5; color: #ea580c; }
-        .stat-mini-icon.warning { background: #fef3c7; color: #ca8a04; }
-        .stat-mini-icon.total { background: #dbeafe; color: #2563eb; }
+        .stat-mini-icon.expired { background: #fee2e2; color: #ef4444; }
+        .stat-mini-icon.critical { background: #fff7ed; color: #f97316; }
+        .stat-mini-icon.warning { background: #fefce8; color: #eab308; }
+        .stat-mini-icon.total { background: #eef2ff; color: #6366f1; }
         
         .stat-mini-value {
             font-size: 1.5rem;
@@ -153,10 +153,10 @@ $page_title = "Expiry Alerts";
             flex-shrink: 0;
         }
         
-        .alert-type-icon.expired { background: #fee2e2; color: #dc2626; }
-        .alert-type-icon.critical { background: #ffedd5; color: #ea580c; }
-        .alert-type-icon.warning { background: #fef3c7; color: #ca8a04; }
-        .alert-type-icon.low_stock { background: #f3f4f6; color: #6b7280; }
+        .alert-type-icon.expired { background: #fee2e2; color: #ef4444; }
+        .alert-type-icon.critical { background: #fff7ed; color: #f97316; }
+        .alert-type-icon.warning { background: #fefce8; color: #eab308; }
+        .alert-type-icon.low_stock { background: #f8fafc; color: #64748b; }
         
         .alert-content {
             flex-grow: 1;
@@ -188,11 +188,11 @@ $page_title = "Expiry Alerts";
             text-transform: uppercase;
         }
         
-        .alert-badge.expired { background: #fee2e2; color: #dc2626; }
-        .alert-badge.critical { background: #ffedd5; color: #ea580c; }
-        .alert-badge.warning { background: #fef3c7; color: #ca8a04; }
-        .alert-badge.acknowledged { background: #dcfce7; color: #16a34a; }
-        .alert-badge.resolved { background: #f3f4f6; color: #6b7280; }
+        .alert-badge.expired { background: #fee2e2; color: #ef4444; }
+        .alert-badge.critical { background: #fff7ed; color: #f97316; }
+        .alert-badge.warning { background: #fefce8; color: #eab308; }
+        .alert-badge.acknowledged { background: #ecfdf5; color: #059669; }
+        .alert-badge.resolved { background: #f8fafc; color: #64748b; }
         
         .alert-actions {
             display: flex;
@@ -368,11 +368,11 @@ $page_title = "Expiry Alerts";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

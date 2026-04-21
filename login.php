@@ -48,7 +48,7 @@ if ($_POST) {
             --hover-bg: #f8fafc;
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
+            --body-bg: #6366f1;
             --card-bg: #ffffff;
             --input-bg: #ffffff;
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);

@@ -83,7 +83,7 @@ class Auth {
         }
         
         session_destroy();
-        header("Location: " . base_url('login.php'));
+        header("Location: " . base_url('login'));
         exit;
 
     }
@@ -129,7 +129,7 @@ class Auth {
 
     public function requireAuth() {
         if (!$this->isLoggedIn()) {
-            header("Location: " . base_url('login.php'));
+            header("Location: " . base_url('login'));
             exit;
         }
     }

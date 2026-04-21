@@ -91,9 +91,9 @@ $page_title = "Add Product";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Product - ShelfAlert | Ace Supermarket</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .form-card {
             background: var(--card-bg);
@@ -116,7 +116,7 @@ $page_title = "Add Product";
         }
         
         .required-indicator {
-            color: #dc2626;
+            color: #ef4444;
         }
     </style>
 </head>
@@ -267,7 +267,7 @@ $page_title = "Add Product";
                         <!-- Expiry Information -->
                         <div class="form-card">
                             <h3 class="form-card-title">
-                                <i data-lucide="calendar-clock" style="width: 20px; height: 20px; color: #dc2626;"></i>
+                                <i data-lucide="calendar-clock" style="width: 20px; height: 20px; color: #ef4444;"></i>
                                 Expiry Information
                             </h3>
                             <div class="row g-3">
@@ -314,11 +314,11 @@ $page_title = "Add Product";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         lucide.createIcons();
         

@@ -86,9 +86,9 @@ $page_title = "View Product";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['product_name']); ?> - ShelfAlert</title>
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="icon" href="../../images/logo.png">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .product-header {
             background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
@@ -110,14 +110,14 @@ $page_title = "View Product";
         }
         .countdown-number { font-size: 2.5rem; font-weight: 700; }
         .countdown-label { color: var(--text-secondary); font-size: 0.875rem; }
-        .status-expired { background: #fef2f2; border-color: #fecaca; }
-        .status-expired .countdown-number { color: #dc2626; }
-        .status-critical { background: #fffbeb; border-color: #fed7aa; }
-        .status-critical .countdown-number { color: #ea580c; }
-        .status-warning { background: #eff6ff; border-color: #bfdbfe; }
-        .status-warning .countdown-number { color: #2563eb; }
-        .status-good { background: #f0fdf4; border-color: #bbf7d0; }
-        .status-good .countdown-number { color: #16a34a; }
+        .status-expired { background: #fee2e2; border-color: #fecaca; }
+        .status-expired .countdown-number { color: #ef4444; }
+        .status-critical { background: #fff7ed; border-color: #fed7aa; }
+        .status-critical .countdown-number { color: #f97316; }
+        .status-warning { background: #f0fdfa; border-color: #99f6e4; }
+        .status-warning .countdown-number { color: #0d9488; }
+        .status-good { background: #ecfdf5; border-color: #bbf7d0; }
+        .status-good .countdown-number { color: #059669; }
     </style>
 </head>
 <body>
@@ -560,11 +560,11 @@ $page_title = "View Product";
         <?php include '../../includes/footer.php'; ?>
     </div>
 
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/lucide.min.js"></script>
-    <script src="../../js/sidebar.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>

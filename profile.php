@@ -59,8 +59,8 @@ $page_title = "Profile";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $page_title; ?> - ShelfAlert</title>
     <!-- CSS -->
-    <link href="<?php echo base_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('css/style.css'); ?>" rel="stylesheet">
+    <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <link href="<?php echo asset_url('css/style.css'); ?>" rel="stylesheet">
     <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <style>
         .profile-header {
@@ -367,11 +367,11 @@ $page_title = "Profile";
     </div>
 
     <!-- Scripts -->
-    <script src="/js/jquery.min.js'); ?>"></script>
-    <script src="<?php echo base_url('js/bootstrap.bundle.min.js'); ?>"></script>
-    <script src="<?php echo base_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo base_url('js/sidebar.js'); ?>"></script>
-    <script src="<?php echo base_url('js/main.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
+    <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             lucide.createIcons();
