@@ -34,7 +34,7 @@ if ($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - ShelfAlert | Ace Supermarket</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" href="images/logo.png">
+    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -48,7 +48,7 @@ if ($_POST) {
             --hover-bg: #f8fafc;
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --body-bg: #6366f1;
+           --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
             --card-bg: #ffffff;
             --input-bg: #ffffff;
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -104,7 +104,7 @@ if ($_POST) {
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 0.75rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--secondary-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -233,7 +233,7 @@ if ($_POST) {
             font-weight: 600;
             color: white;
             cursor: pointer;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--secondary-color);
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
@@ -256,7 +256,7 @@ if ($_POST) {
         .login-side {
             padding: 2.5rem 2.75rem;
             border-left: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #0d9488 0%, #6366f1 100%);
+            background: #6366f1;
             position: relative;
             color: white;
         }
@@ -350,7 +350,7 @@ if ($_POST) {
             <div class="login-main">
                 <div class="login-logo">
                     <div class="login-logo-icon">
-                        <i data-lucide="package-check" style="width: 20px; height: 20px;"></i>
+                        <img src="<?php echo base_url('images/logo.png'); ?>" alt="Logo" style="width: 20px; height: 20px;">
                     </div>
                     <div class="login-logo-text">ShelfAlert</div>
                 </div>
