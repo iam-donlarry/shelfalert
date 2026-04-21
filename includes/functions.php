@@ -6,7 +6,7 @@ function includeFile($path) {
 
 function base_url($path = '') {
     // ShelfAlert base URL
-    return '/shelfalert/' . ltrim($path, '/');
+    return '/' . ltrim($path, '/');
 }
 function sanitizeInput($data) {
     if (is_array($data)) {
