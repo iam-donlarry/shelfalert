@@ -117,12 +117,12 @@ $page_title = "Dashboard";
             color: white;
         }
 
-        .stat-icon.blue { background: #3b82f6; }
-        .stat-icon.green { background: #10b981; }
+        .stat-icon.blue { background: #6366f1; }
+        .stat-icon.green { background: #0d9488; }
         .stat-icon.warning { background: #f59e0b; }
-        .stat-icon.danger { background: #dc2626; }
+        .stat-icon.danger { background: #ef4444; }
         .stat-icon.info { background: #0ea5e9; }
-        .stat-icon.orange { background: #ea580c; }
+        .stat-icon.orange { background: #0d9488; }
 
         .stat-value {
             font-size: 1.75rem;
@@ -131,7 +131,7 @@ $page_title = "Dashboard";
             margin-bottom: 0.25rem;
         }
         
-        .stat-value.danger { color: #dc2626; }
+        .stat-value.danger { color: #ef4444; }
         .stat-value.warning { color: #f59e0b; }
 
         @media (max-width: 768px) {
@@ -229,9 +229,9 @@ $page_title = "Dashboard";
             margin-right: 1rem;
         }
 
-        .alert-icon.expired { background: #fee2e2; color: #dc2626; }
-        .alert-icon.critical { background: #ffedd5; color: #ea580c; }
-        .alert-icon.warning { background: #fef3c7; color: #ca8a04; }
+        .alert-icon.expired { background: #fee2e2; color: #ef4444; }
+        .alert-icon.critical { background: #fff7ed; color: #f97316; }
+        .alert-icon.warning { background: #fefce8; color: #eab308; }
 
         .quick-action-btn {
             display: flex;
@@ -257,10 +257,10 @@ $page_title = "Dashboard";
             font-weight: 600;
         }
         
-        .expiry-badge.expired { background: #fee2e2; color: #dc2626; }
-        .expiry-badge.critical { background: #ffedd5; color: #ea580c; }
-        .expiry-badge.warning { background: #fef3c7; color: #ca8a04; }
-        .expiry-badge.good { background: #dcfce7; color: #16a34a; }
+        .expiry-badge.expired { background: #fee2e2; color: #ef4444; }
+        .expiry-badge.critical { background: #fff7ed; color: #f97316; }
+        .expiry-badge.warning { background: #fefce8; color: #eab308; }
+        .expiry-badge.good { background: #ecfdf5; color: #059669; }
     </style>
 </head>
 <body>
@@ -341,7 +341,7 @@ $page_title = "Dashboard";
                     <div class="content-card">
                         <div class="card-header">
                             <h2 class="card-title">
-                                <i data-lucide="alert-circle" style="width: 20px; height: 20px; margin-right: 8px; color: #dc2626;"></i>
+                                <i data-lucide="alert-circle" style="width: 20px; height: 20px; margin-right: 8px; color: #ef4444;"></i>
                                 Products Requiring Attention
                             </h2>
                             <a href="<?php echo base_url('modules/reports/near_expiry.php'); ?>" class="btn btn-sm btn-outline-primary">
@@ -542,10 +542,10 @@ $page_title = "Dashboard";
             const expiryCtx = document.getElementById('expiryStatusChart').getContext('2d');
             const expiryData = <?php echo json_encode($expiryStatusData); ?>;
             const statusColors = {
-                'Expired': '#dc2626',
-                'Critical (1-7 days)': '#ea580c',
+                'Expired': '#ef4444',
+                'Critical (1-7 days)': '#f97316',
                 'Warning (8-30 days)': '#f59e0b',
-                'Good (>30 days)': '#10b981'
+                'Good (>30 days)': '#0d9488'
             };
 
             new Chart(expiryCtx, {
@@ -583,8 +583,8 @@ $page_title = "Dashboard";
                     datasets: [{
                         label: 'Products',
                         data: <?php echo json_encode(array_column($categoryData, 'count')); ?>,
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 4
+                        backgroundColor: '#0d9488',
+                        borderRadius: 8
                     }]
                 },
                 options: {

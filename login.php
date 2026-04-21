@@ -40,15 +40,15 @@ if ($_POST) {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #dc2626;
-            --primary-hover: #b91c1c;
-            --primary-light: #fef2f2;
-            --secondary-color: #ea580c;
-            --border-color: #e5e7eb;
-            --hover-bg: #f9fafb;
+            --primary-color: #0d9488;
+            --primary-hover: #0f766e;
+            --primary-light: #f0fdfa;
+            --secondary-color: #6366f1;
+            --border-color: #e2e8f0;
+            --hover-bg: #f8fafc;
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-            --body-bg: linear-gradient(135deg, #f8fafc 0%, #fef2f2 100%);
+            --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
             --card-bg: #ffffff;
             --input-bg: #ffffff;
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -256,7 +256,7 @@ if ($_POST) {
         .login-side {
             padding: 2.5rem 2.75rem;
             border-left: 1px solid var(--border-color);
-            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #6366f1 100%);
             position: relative;
             color: white;
         }

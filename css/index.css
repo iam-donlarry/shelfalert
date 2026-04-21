@@ -1,17 +1,18 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
     --sidebar-width: 280px;
     --sidebar-collapsed-width: 80px;
     --header-height: 64px;
     --footer-height: 56px;
-    --primary-color: #12b1b0;
-    --primary-hover: #e4fafa;
-    --primary-light: #eef2ff;
+    --primary-color: #0d9488;
+    --primary-hover: #0f766e;
+    --primary-light: #f0fdfa;
+    --secondary-color: #6366f1;
     --sidebar-bg: #ffffff;
-    --border-color: #e5e7eb;
-    --hover-bg: #e4fafa;
+    --border-color: #e2e8f0;
+    --hover-bg: #f8fafc;
     --text-primary: #0f172a;
     --text-secondary: #64748b;
     --success: #10b981;
@@ -21,7 +22,7 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --body-bg: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
 }
 
 
@@ -32,7 +33,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--body-bg);
     color: var(--text-primary);
     overflow-x: hidden;
