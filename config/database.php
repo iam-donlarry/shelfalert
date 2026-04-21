@@ -29,7 +29,7 @@ class Database {
             $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch(PDOException $exception) {
             error_log("Database connection error: " . $exception->getMessage());
-            throw new Exception("Database connection failed. Please try again later.");
+            throw new Exception("Database connection failed: " . $exception->getMessage());
         }
         return $this->conn;
     }
