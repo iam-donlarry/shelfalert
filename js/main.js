@@ -22,10 +22,33 @@ sidebarOverlay.addEventListener('click', () => {
     sidebarOverlay.classList.remove('show');
 });
 
+// Initialize sidebar state from localStorage
+function initSidebarState() {
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    if (isCollapsed && !isMobile()) {
+        sidebar.classList.add('collapsed');
+        updateCollapseIcon(true);
+    }
+}
+
+function updateCollapseIcon(collapsed) {
+    const icon = collapseToggle.querySelector('i');
+    if (icon) {
+        icon.setAttribute('data-lucide', collapsed ? 'panel-left-open' : 'panel-left-close');
+        lucide.createIcons();
+    }
+}
+
 // Desktop sidebar collapse
 collapseToggle.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.contains('collapsed');
+    localStorage.setItem('sidebarCollapsed', isCollapsed);
+    updateCollapseIcon(isCollapsed);
 });
+
+// Initialize on load
+initSidebarState();
 
 // Dropdown menus in sidebar
 const dropdownLinks = document.querySelectorAll('[data-dropdown]');

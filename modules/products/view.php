@@ -88,7 +88,7 @@ $page_title = "View Product";
     <title><?php echo htmlspecialchars($product['product_name']); ?> - ShelfAlert</title>
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
     <style>
         .product-header {
             background: linear-gradient(135deg, var(--primary-light) 0%, #fff 100%);
@@ -114,10 +114,10 @@ $page_title = "View Product";
         .status-expired .countdown-number { color: #ef4444; }
         .status-critical { background: #fff7ed; border-color: #fed7aa; }
         .status-critical .countdown-number { color: #f97316; }
-        .status-warning { background: #f0fdfa; border-color: #99f6e4; }
-        .status-warning .countdown-number { color: #0d9488; }
-        .status-good { background: #ecfdf5; border-color: #bbf7d0; }
-        .status-good .countdown-number { color: #059669; }
+        .status-warning { background: #fef3c7; border-color: #fde68a; }
+        .status-warning .countdown-number { color: #d97706; }
+        .status-good { background: #dcfce7; border-color: #bbf7d0; }
+        .status-good .countdown-number { color: #16a34a; }
     </style>
 </head>
 <body>
@@ -563,7 +563,6 @@ $page_title = "View Product";
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>

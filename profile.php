@@ -61,7 +61,7 @@ $page_title = "Profile";
     <!-- CSS -->
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo asset_url('css/style.css'); ?>" rel="stylesheet">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
     <style>
         .profile-header {
             background: white;
@@ -370,7 +370,6 @@ $page_title = "Profile";
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

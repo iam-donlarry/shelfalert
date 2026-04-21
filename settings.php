@@ -88,7 +88,7 @@ $page_title = "System Settings";
     <title>Settings - ShelfAlert | Ace Supermarket</title>
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
 </head>
 <body>
     <div class="main-wrapper">
@@ -188,7 +188,7 @@ $page_title = "System Settings";
                             <ul class="mb-0 mt-2">
                                 <li><span class="badge badge-danger">Expired</span> - Past expiry date</li>
                                 <li><span class="badge badge-warning">Critical</span> - Within <?php echo htmlspecialchars($settings['critical_days'] ?? '7'); ?> days of expiry</li>
-                                <li><span class="badge badge-indigo">Warning</span> - Within <?php echo htmlspecialchars($settings['warning_days'] ?? '30'); ?> days of expiry</li>
+                                <li><span class="badge badge-info">Warning</span> - Within <?php echo htmlspecialchars($settings['warning_days'] ?? '30'); ?> days of expiry</li>
                             </ul>
                         </div>
                     </div>
@@ -233,7 +233,6 @@ $page_title = "System Settings";
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>

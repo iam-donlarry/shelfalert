@@ -40,15 +40,15 @@ if ($_POST) {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary-color: #0d9488;
-            --primary-hover: #0f766e;
-            --primary-light: #f0fdfa;
-            --secondary-color: #6366f1;
-            --border-color: #e2e8f0;
-            --hover-bg: #f8fafc;
+            --primary-color: #dc2626;
+            --primary-hover: #b91c1c;
+            --primary-light: #fef2f2;
+            --secondary-color: #ea580c;
+            --border-color: #e5e7eb;
+            --hover-bg: #f9fafb;
             --text-primary: #0f172a;
             --text-secondary: #64748b;
-           --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
+            --body-bg: linear-gradient(135deg, #f8fafc 0%, #fef2f2 100%);
             --card-bg: #ffffff;
             --input-bg: #ffffff;
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -256,7 +256,7 @@ if ($_POST) {
         .login-side {
             padding: 2.5rem 2.75rem;
             border-left: 1px solid var(--border-color);
-            background: #6366f1;
+            background: #dc2626;
             position: relative;
             color: white;
         }
@@ -350,7 +350,7 @@ if ($_POST) {
             <div class="login-main">
                 <div class="login-logo">
                     <div class="login-logo-icon">
-                        <img src="<?php echo base_url('images/logo.png'); ?>" alt="Logo" style="width: 20px; height: 20px;">
+                        <img src="<?php echo base_url('images/logo1.png'); ?>" alt="Logo" style="width: 20px; height: 20px;">
                     </div>
                     <div class="login-logo-text">ShelfAlert</div>
                 </div>

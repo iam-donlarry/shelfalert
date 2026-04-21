@@ -273,7 +273,6 @@ Arguments: C:\xampp\htdocs\shelfalert\cron\check_expiry.php</pre>
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>

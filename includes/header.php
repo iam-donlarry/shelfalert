@@ -10,7 +10,7 @@
     
     <a href="<?php echo base_url('dashboard.php'); ?>" class="logo">
         <span class="logo-icon">
-            <img src="<?php echo base_url('images/logo.png'); ?>" alt="ShelfAlert Logo" style="width: 18px; height: 18px;">
+            <img src="<?php echo base_url('images/logo1.png'); ?>" alt="ShelfAlert Logo" style="width: 18px; height: 18px;">
         </span>
         <span>ShelfAlert</span>
     </a>

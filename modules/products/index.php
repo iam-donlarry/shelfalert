@@ -50,7 +50,7 @@ $page_title = "Products";
     <title>Products - ShelfAlert | Ace Supermarket</title>
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
     <style>
         .filter-card {
             background: var(--card-bg);
@@ -279,7 +279,6 @@ $page_title = "Products";
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>
         lucide.createIcons();

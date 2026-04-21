@@ -74,7 +74,7 @@ $page_title = "Dashboard";
     <title>Dashboard - ShelfAlert | Ace Supermarket</title>
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .stat-card {
@@ -117,12 +117,12 @@ $page_title = "Dashboard";
             color: white;
         }
 
-        .stat-icon.blue { background: #6366f1; }
-        .stat-icon.green { background: #0d9488; }
+        .stat-icon.blue { background: #3b82f6; }
+        .stat-icon.green { background: #10b981; }
         .stat-icon.warning { background: #f59e0b; }
         .stat-icon.danger { background: #ef4444; }
-        .stat-icon.info { background: #0ea5e9; }
-        .stat-icon.orange { background: #0d9488; }
+        .stat-icon.info { background: #3b82f6; }
+        .stat-icon.orange { background: #ea580c; }
 
         .stat-value {
             font-size: 1.75rem;
@@ -531,7 +531,6 @@ $page_title = "Dashboard";
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/lucide.min.js"></script>
-    <script src="js/sidebar.js"></script>
     <script src="js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -542,10 +541,10 @@ $page_title = "Dashboard";
             const expiryCtx = document.getElementById('expiryStatusChart').getContext('2d');
             const expiryData = <?php echo json_encode($expiryStatusData); ?>;
             const statusColors = {
-                'Expired': '#ef4444',
-                'Critical (1-7 days)': '#f97316',
+                'Expired': '#dc2626',
+                'Critical (1-7 days)': '#ea580c',
                 'Warning (8-30 days)': '#f59e0b',
-                'Good (>30 days)': '#0d9488'
+                'Good (>30 days)': '#3b82f6'
             };
 
             new Chart(expiryCtx, {
@@ -583,7 +582,7 @@ $page_title = "Dashboard";
                     datasets: [{
                         label: 'Products',
                         data: <?php echo json_encode(array_column($categoryData, 'count')); ?>,
-                        backgroundColor: '#0d9488',
+                        backgroundColor: '#dc2626',
                         borderRadius: 8
                     }]
                 },

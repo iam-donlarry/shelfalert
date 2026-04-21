@@ -5,24 +5,24 @@
     --sidebar-collapsed-width: 80px;
     --header-height: 64px;
     --footer-height: 56px;
-    --primary-color: #6366f1;
-    --primary-hover: #9c9deb;
-    --primary-light: #f0fdfa; 
-    --secondary-color: #0d9488;
+    --primary-color: #dc2626;
+    --primary-hover: #b91c1c;
+    --primary-light: #fef2f2; 
+    --secondary-color: #ea580c;
     --sidebar-bg: #ffffff;
-    --border-color: #e2e8f0;
-    --hover-bg: #f8fafc;
+    --border-color: #e5e7eb;
+    --hover-bg: #f9fafb;
     --text-primary: #0f172a;
     --text-secondary: #64748b;
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
-    --info: #0ea5e9;
+    --info: #3b82f6;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --body-bg: linear-gradient(135deg, #f8fafc 0%, #f0fdfa 100%);
+    --body-bg: linear-gradient(135deg, #f8fafc 0%, #fef2f2 100%);
     --card-bg: #ffffff;
     --input-bg: #ffffff;
     --modal-bg: #ffffff;
@@ -82,7 +82,7 @@ body {
 .logo-icon {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: var(--primary-color);
     color: white;
     display: flex;
     align-items: center;
@@ -314,6 +314,7 @@ body {
 
 .sidebar.collapsed {
     width: var(--sidebar-collapsed-width);
+    overflow: visible;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -467,9 +468,10 @@ body {
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transition: var(--transition);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     z-index: 1050;
+    transform: translateY(-50%) scale(0.95);
 }
 
 .nav-tooltip::before {
@@ -485,6 +487,7 @@ body {
 .sidebar.collapsed .nav-link:hover .nav-tooltip {
     opacity: 1;
     visibility: visible;
+    transform: translateY(-50%) translateX(5px) scale(1);
 }
 
 .sidebar-overlay {

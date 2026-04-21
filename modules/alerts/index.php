@@ -67,7 +67,7 @@ $page_title = "Expiry Alerts";
     <title>Expiry Alerts - ShelfAlert | Ace Supermarket</title>
     <link href="<?php echo asset_url('css/bootstrap.min.css'); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo asset_url('css/style.css'); ?>">
-    <link rel="icon" href="<?php echo base_url('images/logo.png'); ?>">
+    <link rel="icon" href="<?php echo base_url('images/logo1.png'); ?>">
     <style>
         .stats-row {
             display: flex;
@@ -100,7 +100,7 @@ $page_title = "Expiry Alerts";
         .stat-mini-icon.expired { background: #fee2e2; color: #ef4444; }
         .stat-mini-icon.critical { background: #fff7ed; color: #f97316; }
         .stat-mini-icon.warning { background: #fefce8; color: #eab308; }
-        .stat-mini-icon.total { background: #eef2ff; color: #6366f1; }
+        .stat-mini-icon.total { background: #eff6ff; color: #3b82f6; }
         
         .stat-mini-value {
             font-size: 1.5rem;
@@ -371,7 +371,6 @@ $page_title = "Expiry Alerts";
     <script src="<?php echo asset_url('js/jquery.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/bootstrap.bundle.min.js'); ?>"></script>
     <script src="<?php echo asset_url('js/lucide.min.js'); ?>"></script>
-    <script src="<?php echo asset_url('js/sidebar.js'); ?>"></script>
     <script src="<?php echo asset_url('js/main.js'); ?>"></script>
     <script>lucide.createIcons();</script>
 </body>
